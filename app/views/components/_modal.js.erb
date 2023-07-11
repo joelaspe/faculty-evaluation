@@ -1,0 +1,16 @@
+Vue.component('modal', {
+  template: '<%=j render "components/templates/modal" %>',
+  props: {
+    show: {
+      required: true
+    },
+    size: {
+      default: 'large'
+    }
+  },
+  data: function() {
+    return {
+      showModal: this.show
+    }
+  }
+});

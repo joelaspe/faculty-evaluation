@@ -1,0 +1,44 @@
+# == Schema Information
+#
+# Table name: mentees
+#
+#  id                  :integer          not null, primary key
+#  mentee_type         :integer
+#  first_name          :text
+#  middle_name         :text
+#  last_name           :text
+#  banner_id           :text
+#  study_stage         :text
+#  expected_graduation :datetime
+#  support_source      :text
+#  placement           :text
+#  report_id           :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mentee_type: 1
+  first_name: MyText
+  middle_name: MyText
+  last_name: MyText
+  banner_id: MyText
+  study_stage: MyText
+  expected_graduation: 2016-11-20 17:41:40
+  support_source: MyText
+  placement: MyText
+  report: one
+
+two:
+  mentee_type: 1
+  first_name: MyText
+  middle_name: MyText
+  last_name: MyText
+  banner_id: MyText
+  study_stage: MyText
+  expected_graduation: 2016-11-20 17:41:40
+  support_source: MyText
+  placement: MyText
+  report: two

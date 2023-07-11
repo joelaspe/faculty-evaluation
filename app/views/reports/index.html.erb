@@ -1,0 +1,60 @@
+<h1>Completed annual evaluations for
+<%= @person.first_name %> <%= @person.last_name %></h1>
+<%= link_to 'New Evaluation', new_person_report_path(@person) %>
+<% @reports = @reports.order(report_year: :DESC) %>
+
+
+    <% @reports.each do |report| %>
+
+  <form class="form-horizontal">
+  <div class="form-section container">
+   <div class="form-group">
+            <label class="col-sm-2 control-label"><strong>Year:</strong></label>
+            <div class="col-sm-10">
+            <p class="form-control-static"><%= report.report_year %></p>
+          </div>
+   </div>
+   <div class="form-group">
+            <label class="col-sm-2 control-label"><strong>Rank:</strong></label>
+            <div class="col-sm-10">
+            <p class="form-control-static"><%= report.rank %></p>
+          </div>
+   </div>
+   <div class="form-group">
+            <label class="col-sm-2 control-label"><strong>Department:</strong></label>
+            <div class="col-sm-10">
+            <p class="form-control-static"><%= report.department %></p>
+          </div>
+   </div>
+   <div class="form-group">
+            <label class="col-sm-2 control-label"><strong>Self Evaluation:</strong></label>
+            <div class="col-sm-10">
+            <p class="form-control-static"><%= report.self_evaluation_text %></p>
+          </div>
+   </div>
+   <div class="form-group">
+            <label class="col-sm-2 control-label"><strong>Future Plans:</strong></label>
+            <div class="col-sm-10">
+            <p class="form-control-static"><%= report.future_plans_text %></p>
+          </div>
+
+   </div>
+ </div>
+<table style="margin-left:30px">
+        <tr>
+            <td style="padding-right:18px"><%= link_to 'Show', person_report_path(@person, report), class: "btn btn-primary" %></td>
+            <td style="padding-right:18px"><%= link_to 'Edit', edit_person_report_path(@person, report), class: "btn btn-warning" %></td>
+            <td style="padding-right:18px"><%= link_to 'Delete', person_report_path(@person, report), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to "Download Pdf", get_report_person_report_path(@person, report) %></td>
+        </tr>
+</table>
+    <% end %>
+  <br>
+<table style="margin-left:30px">
+  <tr>
+    <td>
+      <%= link_to 'Back', person_path(@person), class: "btn btn-info btn-md" %>
+   </td>
+   </tr>
+</table>
+  </form>

@@ -1,0 +1,11 @@
+<p>
+    <strong>Report Year:</strong>
+    <%= report.report_year %>
+</p>
+
+
+<%= link_to 'Show', person_report_path(@person, report), class: "btn btn-info" %>
+<%= link_to 'Edit', edit_person_report_path(@person, report), class: "btn btn-warning" %>
+<%= link_to 'Delete', person_report_path(@person, report), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to "Download Pdf", get_report_person_report_path(@person, report) %><br>
+-----------------------------------------<br>

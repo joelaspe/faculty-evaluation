@@ -1,0 +1,5 @@
+<h1>New Annual Evaluation for <%= @person.first_name %> <%= @person.last_name %></h1>
+
+<%= render 'form' %>
+<%= link_to 'Cancel', person_path(@person), class: "btn btn-warning btn-md" %>
+

@@ -1,0 +1,245 @@
+<div id="colleges">
+  <h1>Colleges</h1>
+  <p id="notice"><%= notice %></p>
+  <table id="colleges-table" class="table table-striped" style="border: 2px solid black;">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <tr v-for="(college,index) in colleges">
+          <td>{{ index + 1 }}</td>
+          <td>{{ college.name }}</td>
+          <td class="clickable" @click="manageDepartmentsSetup(index)"><i class="fa fa-plus"></i>&nbsp;&nbsp;Manage Departments</td>
+          <% if current_user.has_role? :global_admin %>
+            <td @click="editCollegeSetup(index)"><i class='fa fa-pencil-square-o clickable' aria-hidden='true'></i></td>
+            <td @click="deleteCollegeSetup(index)"><i class='fa fa-trash-o clickable' aria-hidden='true'></i></td>
+          <% end %>  
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="4" @click="showCreateCollegeModal=true" class="clickable"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add new...</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <modal :show="showCreateCollegeModal" @close="showCreateCollegeModal=false" size="small">
+    <div class="new-college-form">
+      <label for="new-college">College Name</label>
+      <input v-model="newCollege" id="new-college" type="text" class="form-control" placeholder="College Name" />
+      <button type="submit" class="btn btn-primary" @click="createCollege()">Create</button>
+    </div>
+  </modal>
+  <modal :show="showEditCollegeModal" @close="showEditCollegeModal=false" size="medium" style="z-index: 1000;">
+    <div class="edit-college-form">
+      <label for="college">College Name</label>
+      <input v-model="editCollegeName" id="college" type="text" class="form-control" placeholder="College Name" />
+      <button type="submit" class="btn btn-outline-success" @click="editCollege()">Change</button>
+    </div>
+  </modal>
+  <modal :show="showDeleteCollegeModal" @close="showDeleteCollegeModal=false" size="small" style="z-index: 1000;">
+    <div class="delete-college-form">
+      <div>Are you sure you want to delete <strong>{{ colleges[editCollegeId] ? colleges[editCollegeId].name : '' }}</strong>?</div>
+      <div class="centered">
+        <button class="btn btn-info" @click="showDeleteCollegeModal=false">Cancel</button>
+        <button class="btn btn-danger" @click="deleteCollege()">Delete</button>
+      </div>
+    </div>
+  </modal>
+
+  <modal :show="showManageDepartmentsModal" @close="showManageDepartmentsModal=false" size="large">
+    <h3>{{editCollegeName}} Departments</h3>
+    <table id="departments-table" class="table table-striped" style="border: 2px solid black;">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th colspan="3"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr v-for="(department,index) in manageCollegeDepartments">
+        <td>{{ index + 1 }}</td>
+        <td>{{ department.name }}</td>
+        <td class="clickable"><i class="fa fa-plus"></i>&nbsp;&nbsp;Manage Admins</td>
+        <% if current_user.has_role? :global_admin %>
+            <td @click="editDepartmentSetup(index)"><i class='fa fa-pencil-square-o clickable' aria-hidden='true'></i></td>
+            <td @click="deleteDepartmentSetup(index)"><i class='fa fa-trash-o clickable' aria-hidden='true'></i></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="4" @click="showDepartmentCreateModal=true" class="clickable"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add new...</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </modal>
+  <modal :show="showDepartmentCreateModal" @close="showDepartmentCreateModal=false" size="small">
+    <div class="new-department-form">
+      <label for="new-department">Department Name</label>
+      <input v-model="newDepartment" id="new-department" type="text" class="form-control" placeholder="Department Name" />
+      <button type="submit" class="btn btn-primary" @click="createDepartment()">Create</button>
+    </div>
+  </modal>
+  <modal :show="showEditDepartmentModal" @close="showEditDepartmentModal=false" size="medium">
+    <div class="edit-department-form">
+      <label for="department">Department Name</label>
+      <input v-model="editDepartmentName" id="college" type="text" class="form-control" placeholder="Department Name" />
+      <button type="submit" class="btn btn-outline-success" @click="editDepartment()">Change</button>
+    </div>
+  </modal>
+  <modal :show="showDeleteDepartmentModal" @close="showDeleteDepartmentModal=false" size="small">
+    <div class="delete-department-form">
+      <div>Are you sure you want to delete <strong>{{ manageCollegeDepartments[editDepartmentId] ? manageCollegeDepartments[editDepartmentId].name : '' }}</strong>?</div>
+      <div class="centered">
+        <button class="btn btn-info" @click="showDeleteDepartmentModal=false">Cancel</button>
+        <button class="btn btn-danger" @click="deleteDepartment()">Delete</button>
+      </div>
+    </div>
+  </modal>
+</div>
+
+
+<script>
+  // Load Modal Component
+  <%= render 'components/modal.js' %>
+
+    app = new Vue({
+      el: '#colleges',
+      data: {
+        colleges: <%= @colleges.to_json.html_safe %>,
+        newCollege: null,
+        editCollegeName: null,
+        editCollegeId: null,
+        showCreateCollegeModal : false,
+        showEditCollegeModal: false,
+        showDeleteCollegeModal: false,
+        showManageDepartmentsModal: false,
+        manageCollegeDepartments: [],
+        showDepartmentCreateModal: false,
+        newDepartment: null,
+        editDepartmentName: null,
+        editDepartmentId: null,
+        showEditDepartmentModal: false,
+        showDeleteDepartmentModal: false
+      },
+      methods: {
+        createCollege: function () {
+          $.post("<%= colleges_path %>", {
+            name: this.newCollege
+          }).success(function (resp) {
+            if (resp.success) {
+              app.colleges.push(resp.college)
+              app.newCollege = null
+              app.showCreateModal = false
+            }
+          })
+        },
+        editCollegeSetup: function (index) {
+          this.editCollegeId = index
+          this.editCollegeName = this.colleges[index].name
+          this.showEditCollegeModal = true
+        },
+        deleteCollegeSetup: function (index) {
+          this.editCollegeId = index
+          this.showDeleteCollegeModal = true
+        },
+        manageDepartmentsSetup: function(index) {
+          this.editCollegeId = index
+          this.editCollegeName = this.colleges[index].name
+          $.get("/colleges/" + this.colleges[index].id + "/departments.json")
+              .success(function(resp) {
+                app.manageCollegeDepartments = resp
+              })
+          this.showManageDepartmentsModal = true
+        },
+        editDepartmentSetup: function(index) {
+          this.editDepartmentId = index
+          this.editDepartmentName = this.manageCollegeDepartments[index].name
+          this.showEditDepartmentModal = true
+        },
+        deleteDepartmentSetup: function(index) {
+          this.editDepartmentId = index
+          this.editDepartmentName = this.manageCollegeDepartments[index].name
+          this.showDeleteDepartmentModal = true
+        },
+
+        editCollege: function () {
+          $.ajax({
+            url: "<%= colleges_path %>/" + app.colleges[app.editCollegeId].id,
+            type: 'PATCH',
+            data: {name: app.editCollegeName},
+            success: function (resp) {
+              if (resp.success) {
+                app.colleges[app.editCollegeId].name = app.editCollegeName
+                app.editCollegeId = null
+                app.editCollegeName = null
+                app.showEditCollegeModal = false
+              }
+            }
+          })
+
+        },
+        deleteCollege: function () {
+          $.ajax({
+            url: "<%= colleges_path %>/" + app.colleges[app.editCollegeId].id,
+            type: 'DELETE',
+            success: function (resp) {
+              if (resp.success) {
+                app.colleges.splice(app.editCollegeId, 1);
+                app.editCollegeId = null
+                app.showDeleteCollegeModal = false
+              }
+            }
+          })
+        },
+        createDepartment: function () {
+          $.post("/colleges/" + this.colleges[this.editCollegeId].id + "/departments", {
+            name: this.newDepartment
+          }).success(function (resp) {
+            if (resp.success) {
+              app.manageCollegeDepartments.push(resp.department)
+              app.newDepartment = null
+              app.showDepartmentCreateModal = false
+            }
+          })
+        },
+        editDepartment: function () {
+          $.ajax({
+            url: "/colleges/" + this.editCollegeId + "/departments/" + this.manageCollegeDepartments[this.editDepartmentId].id,
+            type: 'PATCH',
+            data: {name: app.editDepartmentName},
+            success: function (resp) {
+              if (resp.success) {
+                app.manageCollegeDepartments[app.editDepartmentId].name = app.editDepartmentName
+                app.editDepartmentId = null
+                app.editDepartmentName = null
+                app.showEditDepartmentModal = false
+              }
+            }
+          })
+
+        },
+        deleteDepartment: function () {
+          $.ajax({
+            url: "/colleges/" + this.editCollegeId + "/departments/" + this.manageCollegeDepartments[this.editDepartmentId].id,
+            type: 'DELETE',
+            success: function (resp) {
+              if (resp.success) {
+                app.manageCollegeDepartments.splice(app.editDepartmentId, 1);
+                app.editDepartmentId = null
+                app.showDeleteDepartmentModal = false
+              }
+            }
+          })
+        }
+      }
+    })
+
+</script>

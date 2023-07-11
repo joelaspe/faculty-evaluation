@@ -1,0 +1,214 @@
+<div class="container">    
+    <table class="table table-condensed">
+        <tr>
+            <td><h3>Calendar Year:</h3></td>
+            <td><%= @report.report_year %></td>
+        </tr>
+        <tr>
+            <td><h3>Faculty Name:</h3></td>
+            <td><%= "#{@person.first_name} #{@person.last_name}" %></td>
+        </tr>
+        <tr>
+            <td><h3>Rank:</h3></td>
+            <td><%= @person.position %></td>
+        </tr>
+        <tr>
+            <td><h3>Department:</h3></td>
+            <td><%= @report.department %></td>
+        </tr>
+   </table>
+</div> 
+
+<h3>Scholarship:</h3>
+
+<% @publications.each do |publication| %>
+    <p>
+        <strong>Type:</strong>
+        <%= publication.publication_type.titleize %>
+    </p>
+    <p>
+        <strong>Text:</strong>
+        <%= publication.body %>
+    </p>
+    <p>
+        <strong>URL:</strong>
+        <%= publication.url %>
+    </p>
+
+-----------------------------------------<br>
+<% end %>
+    
+<h3>Course Information</h3>
+
+<% @courses.each do |course| %>
+    <p>
+        <strong>Year:</strong>
+        <%= course.year %>
+    </p>
+    <p>
+        <strong>Semester:</strong>
+        <%= course.semester %>
+    </p>
+    <p>
+        <strong>Course Number:</strong>
+        <%= course.course_number %>
+    </p>
+    <p>
+        <strong>Course Title:</strong>
+        <%= course.course_title %>
+    </p>
+    <p>
+        <strong>Number Enrolled:</strong>
+        <%= course.enrollment %>
+    </p>
+    <p>
+        <strong>Evaluation Results:</strong>
+        <%= course.evaluation_results %>
+    </p>
+    <p>
+        <strong>Taught Course:</strong>
+        <%= course.taught? ? 'Yes' : 'No' %>
+    </p>
+
+-----------------------------------------<br>
+<% end %>
+
+<h3>Professional Services Information</h3>
+
+<% @professional_services.each do |professional_service| %>
+    <p>
+        <strong>Activity:</strong>
+        <%= professional_service.title %>
+    </p>
+    <p>
+        <strong>Description:</strong>
+        <%= professional_service.description %>
+    </p>
+
+-----------------------------------------<br>
+<% end %>
+
+<h3>University Services Information:</h3>
+
+<% @university_services.each do |university_service| %>
+    <p>
+        <strong>Position:</strong>
+        <%= university_service.position %>
+    </p>
+    <p>
+        <strong>Description:</strong>
+        <%= university_service.description %>
+    </p>
+
+-----------------------------------------<br>
+<% end %>
+
+<h3>Outreach Activities Information:</h3>
+
+<% @outreach_activities.each do |outreach_activity| %>
+    <p>
+        <strong>Activity:</strong>
+        <%= outreach_activity.name %>
+    </p>
+    <p>
+        <strong>Description:</strong>
+        <%= outreach_activity.description %>
+    </p>
+
+-----------------------------------------<br>
+<% end %>
+
+<h3>Grants:</h3>
+
+<% @grants.each do |grant| %>
+    <p>
+        <strong>Grant Title:</strong>
+        <%= grant.title %>
+    </p>
+    <p>
+        <strong>Status:</strong>
+        <%= grant.status %>
+    </p>
+    <p>
+        <strong>Duration:</strong>
+        <%= grant.duration %>
+    </p>
+    <p>
+        <strong>Total Funding:</strong>
+        <%= grant.total_funding %>
+    </p>
+    <p>
+        <strong>UNM Portion:</strong>
+        <%= grant.unm_portion %>
+    </p>
+    <p>
+        <strong>Local College:</strong>
+        <%= grant.granscol %>
+    </p>
+    <p>
+        <strong>Local College Portion:</strong>
+        <%= grant.soe_portion %>
+    </p>
+
+-----------------------------------------<br>
+<% end %>
+
+<h3>Research Mentoring</h3>
+
+<% @mentees.each do |mentee| %>
+    <p>
+        <strong>Mentee Type:</strong>
+        <%= mentee.mentee_type %>
+    </p>
+    <p>
+        <strong>First Name:</strong>
+        <%= mentee.first_name %>
+    </p>
+    <p>
+        <strong>Middle Name:</strong>
+        <%= mentee.middle_name %>
+    </p>
+    <p>
+        <strong>Last Name:</strong>
+        <%= mentee.last_name %>
+    </p>
+    <p>
+        <strong>Banner ID:</strong>
+        <%= mentee.banner_id %>
+    </p>
+    <p>
+        <strong>Study Stage:</strong>
+        <%= mentee.study_stage %>
+    </p>
+    <p>
+        <strong>Expected Graduation Date:</strong>
+        <%= mentee.expected_graduation %>
+    </p>
+    <p>
+        <strong>Support Source:</strong>
+        <%= mentee.support_source %>
+    </p>
+    <p>
+        <strong>Placement:</strong>
+        <%= mentee.placement %>
+    </p>
+
+------------------------------------------<br>
+<% end %>
+
+<div class="container">
+    <table class="table table-condensed">
+        <tr>
+            <td><h3>Self Evaluation:</h3></td>
+            <td><%= @report.self_evaluation_text %></td>
+        </tr>
+        <tr>
+            <td><h3>Future Plans:</h3></td>
+            <td><%= @report.future_plans_text %></td>
+        </tr>
+   </table>
+</div>
+
+
+<%= link_to 'Edit', edit_person_report_path(@person, @report) %>
+<%= link_to 'Delete', person_report_path(@person, @report), method: :delete, data: { confirm: 'Are you sure?' } %><br>

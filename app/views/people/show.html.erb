@@ -1,0 +1,30 @@
+<div class="container form-section">
+  <div class="row">
+    <div class="col-sm-3">
+      <strong>Name:</strong>
+      <%= "#{@person.first_name} #{@person.last_name}" %>
+    </div>
+    <div class="col-sm-3">
+      <strong>Net ID:</strong>
+      <%= @person.net_id %>
+    </div>
+    <div class="col-sm-3">
+      <strong>Banner ID:</strong>
+      <%= @person.banner_id %>
+    </div>
+    <div class="col-sm-3">
+      <strong>Position:</strong>
+      <%= @person.position %>
+    </div>
+  </div>
+
+
+  <h2>Completed Annual Evaluations</h2>
+  <% @reports = @person.reports.all %>
+  <% @reports = @reports.order(report_year: :DESC) %>
+  <%= render @reports %>
+
+  <%= link_to 'New Annual Evaluation', new_person_report_path(@person), class: "btn btn-info btn-md" %><br>
+  <br>
+  <%= link_to 'Back', people_path, class: "btn btn-info btn-md" %>
+</div>

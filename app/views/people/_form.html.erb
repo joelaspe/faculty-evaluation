@@ -1,0 +1,47 @@
+<%= form_for @person do |f| %>
+ 
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@person.errors.count, "error") %> prohibited
+        this person from being saved:
+      </h2>
+      <ul>
+        <% @person.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+ <p>
+    <%= f.label :first_name, 'First Name' %><br>
+    <%= f.text_field :first_name %>
+  </p>
+ 
+  <p>
+    <%= f.label :last_name, 'Last Name' %><br>
+    <%= f.text_field :last_name %>
+  </p>
+    <p>
+    <%= f.label :net_id, 'NetID' %><br>
+    <%= f.text_field :net_id %>
+  </p>
+  <p>
+    <%= f.label :banner_id, 'Banner ID (UNM ID #)' %><br>
+    <%= f.text_field :banner_id %>
+  </p>
+  <p>
+    <%= f.label :colleges_id, 'College' %><br>
+    <%= f.select :colleges_id, options_from_collection_for_select(College.all, :id, :name) %>
+  </p>
+  <p>
+    <%= f.label :position %><br>
+    <%= f.text_field :position %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+

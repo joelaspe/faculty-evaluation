@@ -1,0 +1,40 @@
+<div class="nested-fields form-section container">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :title, 'Grant Title' %><br>
+        <%= f.text_field :title, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">
+        <%= f.label :status, 'Grant Status' %><br>
+        <%= f.text_field :status, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :duration, 'Duration' %><br>
+        <%= f.text_field :duration, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :total_funding, 'Total Funding ($)' %><br>
+        <%= f.text_field :total_funding, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :unm_portion, 'UNM Portion of Funding ($)' %><br>
+        <%= f.text_field :unm_portion, class: 'form-control'  %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :granscol, 'Your College (Name)' %><br>
+        <%= f.text_field :granscol, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :soe_portion, 'Your College Portion of Funding ($)' %><br>
+        <%= f.text_field :soe_portion, class: 'form-control' %>
+      </div>
+      
+    </div>
+
+
+  </div>
+    <%= link_to_remove_association "Remove Grant Info", f %>
+</div>

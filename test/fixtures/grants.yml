@@ -1,0 +1,38 @@
+# == Schema Information
+#
+# Table name: grants
+#
+#  id            :integer          not null, primary key
+#  status        :integer
+#  title         :text
+#  duration      :text
+#  total_funding :decimal(, )
+#  unm_portion   :decimal(, )
+#  soe_portion   :decimal(, )
+#  granscol      :text
+#  report_id     :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: 1
+  title: MyText
+  duration: MyText
+  total_funding: 9.99
+  unm_portion: 9.99
+  soe_portion: 9.99
+  granscol: MyText
+  report: one
+
+two:
+  status: 1
+  title: MyText
+  duration: MyText
+  total_funding: 9.99
+  unm_portion: 9.99
+  soe_portion: 9.99
+  granscol: MyText
+  report: two

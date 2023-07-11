@@ -1,0 +1,38 @@
+# == Schema Information
+#
+# Table name: courses
+#
+#  id                 :integer          not null, primary key
+#  course_number      :text
+#  course_title       :text
+#  enrollment         :integer
+#  year               :integer
+#  semester           :text
+#  evaluation_results :text
+#  taught             :boolean
+#  report_id          :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  course_number: MyText
+  course_title: MyText
+  enrollment: 1
+  year: 1
+  semester: MyText
+  evaluation_results: MyText
+  taught: false
+  report: one
+
+two:
+  course_number: MyText
+  course_title: MyText
+  enrollment: 1
+  year: 1
+  semester: MyText
+  evaluation_results: MyText
+  taught: false
+  report: two

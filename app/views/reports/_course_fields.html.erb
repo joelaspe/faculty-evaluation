@@ -1,0 +1,39 @@
+<div class="nested-fields form-section container">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :course_title, 'Course Title' %><br>
+        <%= f.text_field :course_title, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">
+        <%= f.label :course_number, 'Course Number' %><br>
+        <%= f.text_field :course_number, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :enrollment, 'Number Enrolled' %><br>
+        <%= f.text_field :enrollment, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :year %><br>
+        <%= f.text_field :year, class: 'form-control' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.label :semester %><br>
+        <%= f.text_field :semester, class: 'form-control'  %>
+      </div>
+    </div>
+
+
+
+
+
+      <%= f.label :evaluation_results, 'Evaluation Results' %><br>
+      <%= f.text_area :evaluation_results, class: 'form-control'  %>
+
+      <%= f.label :taught, 'Taught Class?' %><br>
+      <%= f.check_box :taught?, class: 'form-control', 'data-toggle' => 'toggle'   %>
+  </div>
+    <%= link_to_remove_association "Remove Course Info", f %>
+</div>

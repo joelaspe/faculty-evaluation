@@ -1,0 +1,14 @@
+<div class="nested-fields form-section container">
+
+        <%= f.label :publication_type, 'Publication Type' %>
+        <%= f.select :publication_type, Report.pubtypes.keys.map{|pubtype| [pubtype.titleize,pubtype]},{}, {class: 'form-control', style: 'margin-top: .5em'}%>
+        
+        <%= f.label :body, 'Text' %>
+        <%= f.text_area  :body, class: 'form-control' %>
+       
+        <%= f.label :url %>
+        <%= f.text_area :url, class: 'form-control' %>
+
+
+    <%= link_to_remove_association "Remove Publication Info", f %>
+</div>

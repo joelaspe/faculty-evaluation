@@ -1,0 +1,12 @@
+<div>
+  <transition name="screen">
+    <div v-if="show" id="page-screen" @click="$emit('close')" ></div>
+  </transition>
+
+  <transition name="modal">
+    <div v-if="show" class="vue-modal" v-bind:class="size">
+      <i @click="$emit('close')" class="fa fa-3x fa-times-circle-o close-modal" aria-hidden="true"></i>
+      <slot></slot>
+    </div>
+  </transition>
+</div>

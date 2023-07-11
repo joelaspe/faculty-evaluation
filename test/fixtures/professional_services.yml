@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: professional_services
+#
+#  id          :integer          not null, primary key
+#  title       :text
+#  description :text
+#  type        :integer
+#  report_id   :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  description: MyText
+  type: 1
+  report: one
+
+two:
+  title: MyText
+  description: MyText
+  type: 1
+  report: two

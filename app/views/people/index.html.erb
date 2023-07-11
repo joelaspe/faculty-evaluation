@@ -1,0 +1,28 @@
+<h1>Registered People</h1>
+
+<table>
+    <tr>
+        <th style="padding-right:10px">Last Name</th>
+        <th style="padding-right:8px">First Name</th>
+        <th style="padding-right:8px">NetID</th>
+        <th style="padding-right:8px">Banner ID#</th>
+        <th>Position</th>
+        <th colspan="2"></th>
+    </tr>
+
+    <% @people.order(:last_name, :first_name) %>
+    <% @people.each do |person| %>
+        <tr>
+            <td><%= person.last_name %></td>
+            <td><%= person.first_name %></td>
+            <td><%= person.net_id %></td>
+            <td><%= person.banner_id %></td>
+            <td><%= person.position %></td>
+         
+            <td style="padding-left:8px"><%= link_to 'Show', person_path(person), class: "btn btn-info" %></td>
+            <td><%= link_to 'Edit', edit_person_path(person), class: "btn btn-warning" %></td>
+            <td><%= link_to 'Delete', person_path(person), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+</table>
+<%= link_to 'New Person', new_person_path, class: "btn btn-info" %>

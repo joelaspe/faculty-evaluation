@@ -1,0 +1,7 @@
+<h1>Welcome to the Faculty Evaluation System</h1>
+<p>This new system will allow you, as the supervisor, to perform annual evaluations on faculty within the university.</p>
+<% if current_user %>
+  <% if current_user.has_role? :global_admin %>
+    <%= link_to 'People', controller: 'people' %>
+  <% end %>
+<% end %>

@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id         :integer          not null, primary key
+#  banner_id  :text
+#  net_id     :text
+#  first_name :text
+#  last_name  :text
+#  position   :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  banner_id: MyText
+  net_id: MyText
+  first_name: MyText
+  last_name: MyText
+  position: MyText
+
+two:
+  banner_id: MyText
+  net_id: MyText
+  first_name: MyText
+  last_name: MyText
+  position: MyText

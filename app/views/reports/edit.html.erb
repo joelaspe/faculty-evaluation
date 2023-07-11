@@ -1,0 +1,11 @@
+<p>
+    <strong>First Name:</strong>
+    <%= @person.first_name %>
+    <strong>Last Name:</strong>
+    <%= @person.last_name %>
+</p>
+
+
+<%= render 'form' %>
+
+<%= link_to 'Cancel', person_path(@person), class: "btn btn-warning btn-md" %>

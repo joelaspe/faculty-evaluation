@@ -1,0 +1,128 @@
+<%= form_for [@person,@report]  do |f| %>
+  <% if @report.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@report.errors.count, "error") %> prohibited
+        this evaluation from being saved:
+      </h2>
+      <ul>
+        <% @report.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-section container">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-4">
+            <%= f.label :report_year, 'Evaluation Year' %>
+            <%= f.text_field :report_year, class: 'form-control' %>
+          </div>
+          <div class="col-sm-4">
+            <%= f.label :rank %>
+            <%= f.select :rank, Report.ranks.keys.map{|rank| [rank.titleize,rank]},{} , {class: 'form-control', style: 'margin-top: .5em'}%>
+          </div>
+          <div class="col-sm-4">
+            <%= f.label :department %>
+            <%= f.text_field :department, class: 'form-control' %>
+          </div>
+        </div>
+        <%= f.label :self_evaluation_text, 'Evaluee Self Input' %>
+        <%= f.text_area :self_evaluation_text, class: 'form-control' %>
+
+        <%= f.label :future_plans_text, 'Evaluee Future Plans' %>
+        <%= f.text_area :future_plans_text, class: 'form-control' %>
+      </div>
+  </div>
+  <div>
+        <h3>Publications:</h3>
+        <i>Note: Provide full citations for any of the papers listed below.  Include only items associated with the calendar year identified on this report.</i>
+        <div id="Publications">
+            <%= f.fields_for :publications do |publication| %>
+                <%= render 'publication_fields', f: publication %>
+            <% end %>
+            <div class="links">
+                <%= link_to_add_association 'Add New Publication', f, :publications, class: 'btn btn-outline-primary' %>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>Course Information:</h3>
+        <div id="Courses">
+            <%= f.fields_for :courses do |course| %>
+                <%= render 'course_fields', f: course %>
+            <% end %>
+            <div class="links">
+                 <%= link_to_add_association 'Add New Course', f, :courses, class: 'btn btn-outline-primary' %>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>Professional Services:</h3>
+        <div id="Professional Services">
+            <%= f.fields_for :professional_services do |professional_service| %>
+                <%= render 'professional_service_fields', f: professional_service %>
+            <% end %>
+            <div class="links">
+                <%= link_to_add_association 'Add New Professional Service', f, :professional_services, class: 'btn btn-outline-primary' %>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>University Services:</h3>
+        <div id="University Services">
+            <%= f.fields_for :university_services do |university_service| %>
+                <%= render 'university_service_fields', f: university_service %>
+            <% end %>
+            <div class="links">
+                <%= link_to_add_association 'Add New University Service Position', f, :university_services, class: 'btn btn-outline-primary' %>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>Outreach Activities:</h3>
+        <div id="Outreach Activites">
+            <%= f.fields_for :outreach_activities do |outreach_activity| %>
+                <%= render 'outreach_activity_fields', f: outreach_activity %>
+            <% end %>
+            <div class="links">
+                <%= link_to_add_association 'Add New Outreach Activity', f, :outreach_activities, class: 'btn btn-outline-primary' %>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>Grants:</h3>
+        <div id="Grants">
+            <%= f.fields_for :grants do |grant| %>
+                <%= render 'grant_fields', f: grant %>
+            <% end %>
+            <div class="links">
+                <%= link_to_add_association 'Add New Grant', f, :grants, class: 'btn btn-outline-primary' %>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Research Mentoring</h3>
+        <i>Note:  Do not list the same student twice—clearly a student who just graduated was actually supervised.   When a student is co-supervised, indicate the fact.  Do not include BS and MS students whom you advise, but who are not involved in research.  Indicate placement for graduating students, if known.  Indicate the stage in their studies and the expected graduation date for all students, e.g., pre-qualifier, passed qualified, etc.  Indicate the source of support for the graduate students being supervised.</i>
+        <div id="Mentees"
+            <%= f.fields_for :mentees do |mentee| %>
+                <% render 'mentee_fields', f: mentee %>
+            <% end %>
+            <div class="links">
+                <%= link_to_add_association 'Add New Mentee', f, :mentees, class: 'btn btn-outline-primary' %>
+            </div>
+        </div>
+    <p>
+        <%= f.submit class: 'btn btn-primary' %>
+    </p>
+
+<% end %>
+
+<script>
+$(document).on('cocoon:after-insert', function(e, insertedItem) {
+  $('input[type="checkbox"]').bootstrapToggle({on: 'Yes', off: 'No', offstyle: 'info'});
+})
+</script>
